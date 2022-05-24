@@ -1,0 +1,15 @@
+DAO\AutorJpaDAO.class
+modelo\Volume.class
+hello\MessageBean$Greetings.class
+DAO\VolumeJpaDAO.class
+modelo\Artigo.class
+modelo\Autor.class
+com\trabappcorp\Adopet\MyResource.class
+hello\MessageBean.class
+modelo\Artigo$SiglaIdioma.class
+com\trabappcorp\Adopet\Pet.class
+JPA\EntityManagerSingleton.class
+com\trabappcorp\Adopet\ApplicationConfig.class
+com\trabappcorp\Adopet\Variacao.class
+DAO\ArtigoJpaDAO.class
+modelo\Autor$SiglaPaisOrigem.class
