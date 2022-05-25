@@ -10,11 +10,10 @@ package modelo;
  * @author Mac
  */
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "contatos")
-public class Contato implements Serializable {
+public class Contato implements Serializable, IEntity {
 
     private Long id;
     
@@ -76,4 +75,29 @@ public class Contato implements Serializable {
         this.usuario = usuario;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Contato)) {
+            return false;
+        }
+        Contato other = (Contato) object;
+        if ((this.id == null && other.getId() != null) || (this.id != null && !this.id.equals(other.getId()))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.NewEntity[ id=" + id + " ]";
+    }
+    
 }

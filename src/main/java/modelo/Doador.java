@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.trabappcorp.Adopet;
+package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Instituicao implements Serializable {
+public class Doador implements Serializable, IEntity {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,32 +23,16 @@ public class Instituicao implements Serializable {
     private Long id;
     
     @Column(nullable=false)
-    private int num_animais;
-    
-    @Column(nullable=false)
-    private int capacidade;
-    
-    @Column(nullable=false)
-    private String num_registro;
-    
-    @Column(nullable=false)
-    private String certificacoes;
-    
-    @Column(nullable=false)
-    private String nome;
+    private String cpf;
     
     @Column(nullable=true)
-    private Date data_fundacao;
-
-    public Instituicao(int num_animais, int capacidade, String num_registro, String certificacoes, String nome, Date data_fundacao) {
-        this.num_animais = num_animais;
-        this.capacidade = capacidade;
-        this.num_registro = num_registro;
-        this.certificacoes = certificacoes;
-        this.nome = nome;
-        this.data_fundacao = data_fundacao;
+    private Date data_nasc;
+    
+     public Doador(String cpf, Date data_nasc) {
+        this.cpf = cpf;
+        this.data_nasc = data_nasc;
     }
-     
+
     public void atualizarInfo(){
         
     }
@@ -58,6 +42,10 @@ public class Instituicao implements Serializable {
     }
     
     public void retiraAnuncio(Pet pet){
+        
+    }
+    
+    public void notificarAdotante(Pet pet, String titulo, String descricao){
         
     }
 
@@ -70,8 +58,8 @@ public class Instituicao implements Serializable {
     }
 
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -85,7 +73,7 @@ public class Instituicao implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Instituicao other = (Instituicao) obj;
+        final Doador other = (Doador) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +81,7 @@ public class Instituicao implements Serializable {
     }
 
     public String toString() {
-        return "Instituicao{" + "id=" + id + '}';
-    }
+        return "Doador{" + "id=" + id + '}';
+    } 
 
 }

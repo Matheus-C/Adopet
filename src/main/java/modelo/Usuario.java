@@ -14,7 +14,7 @@ import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, IEntity {
 
     private Long id;
     
@@ -94,5 +94,35 @@ public class Usuario implements Serializable {
     public void setPerfil(String perfil){
         this.perfil = perfil;
     }
+    
+    public void atualizarInfo() {}
+    
+    public void adicionarContato(String nome, String tipo, String info) {}
+    
+    public void removerContato(String nome) {}
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.id == null && other.getId() != null) || (this.id != null && !this.id.equals(other.getId()))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.NewEntity[ id=" + id + " ]";
+    }
 }
