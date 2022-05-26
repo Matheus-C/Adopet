@@ -24,9 +24,6 @@ public class Endereco implements Serializable, IEntity {
     private int numero;
     private String complemento;
     
-    private Usuario usuario;
-
-    
     public Endereco() {}
     
     public Endereco(
@@ -47,6 +44,7 @@ public class Endereco implements Serializable, IEntity {
     
     @Id
     @GeneratedValue
+    @Override
     public Long getId() {
         return id;
     }
@@ -95,16 +93,16 @@ public class Endereco implements Serializable, IEntity {
     public void setComplemento(String complemento){
         this.complemento = complemento;
     }
-    
-    @OneToOne(mappedBy = "endereco")
-    public Usuario getUsuario(){
-        return usuario;
-    }
-    public void setUsuario(Usuario usuario){
-        this.usuario = usuario;
+
+    public void atualizarInfo(String cidade,
+        String bairro,
+        String estado,
+        String rua,
+        int numero,
+        String complemento
+    ) {
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -127,6 +125,6 @@ public class Endereco implements Serializable, IEntity {
 
     @Override
     public String toString() {
-        return "modelo.NewEntity[ id=" + id + " ]";
+        return "modelo.Endereco[ id=" + id + " ]";
     }
 }

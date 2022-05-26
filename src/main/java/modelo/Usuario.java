@@ -12,16 +12,21 @@ package modelo;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
-@Entity
-@Table(name = "usuarios")
-public class Usuario implements Serializable, IEntity {
 
-    private Long id;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "usuarios")
+public abstract class Usuario implements Serializable, IEntity {
+
+    protected Long id;
     
     private String login;
     private String senha;
     private Endereco endereco;
+    
     private Set<Contato> contatos;
+    private Set<Pet> petsCadastrados;
+    
     private String nome;
     private String perfil;
     
@@ -43,6 +48,7 @@ public class Usuario implements Serializable, IEntity {
     
     @Id
     @GeneratedValue
+    @Override
     public Long getId() {
         return id;
     }
@@ -50,6 +56,7 @@ public class Usuario implements Serializable, IEntity {
          this.id = id;
     }
     
+    @Column(nullable = false, unique = true)
     public String getLogin(){
         return login;
     }
@@ -57,13 +64,15 @@ public class Usuario implements Serializable, IEntity {
         this.login = login;
     }
         
+    @Column(nullable = false)
     public String getSenha(){
         return senha;
     }
     public void setSenha(String senha){
         this.senha = senha;
     }
-        
+
+    @Column(nullable = false)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     public Endereco getEndereco(){
@@ -73,21 +82,30 @@ public class Usuario implements Serializable, IEntity {
         this.endereco = endereco;
     }
 
-    @OneToMany(mappedBy="usuario")
+    @OneToMany
     public Set<Contato> getContatos() {
         return this.contatos;
     }
     public void setContatos(Set<Contato> contatos) {
         this.contatos = contatos;
     }
-            
+
+    @OneToMany(mappedBy = "dono")
+    public Set<Pet> getPetsCadastrados() {
+        return this.petsCadastrados;
+    }
+    public void setPetsCadastrados(Set<Pet> pets) {
+        this.petsCadastrados = pets;
+    }
+    
+    @Column(nullable = false)
     public String getNome(){
         return nome;
     }
     public void setNome(String nome){
         this.nome = nome;
     }
-            
+    
     public String getPerfil(){
         return perfil;
     }
@@ -95,7 +113,7 @@ public class Usuario implements Serializable, IEntity {
         this.perfil = perfil;
     }
     
-    public void atualizarInfo() {}
+    public void atualizarInfo(String nome, String perfil) {}
     
     public void adicionarContato(String nome, String tipo, String info) {}
     
@@ -123,6 +141,6 @@ public class Usuario implements Serializable, IEntity {
 
     @Override
     public String toString() {
-        return "modelo.NewEntity[ id=" + id + " ]";
+        return "modelo.Usuario[ id=" + id + " ]";
     }
 }

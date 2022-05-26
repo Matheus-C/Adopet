@@ -20,10 +20,7 @@ public class Contato implements Serializable, IEntity {
     private String nome;
     private String tipo;    
     private String info;
-    
-    private Usuario usuario;
-
-    
+        
     public Contato() {}
     
     public Contato(
@@ -66,15 +63,6 @@ public class Contato implements Serializable, IEntity {
         this.info = info;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = true)
-    public Usuario getUsuario(){
-        return usuario;
-    }
-    public void setUsuario(Usuario usuario){
-        this.usuario = usuario;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -97,7 +85,7 @@ public class Contato implements Serializable, IEntity {
 
     @Override
     public String toString() {
-        return "modelo.NewEntity[ id=" + id + " ]";
+        return "modelo.Contato[ id=" + id + " ]";
     }
     
 }

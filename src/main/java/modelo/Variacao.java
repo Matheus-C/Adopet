@@ -32,6 +32,7 @@ public class Variacao implements Serializable, IEntity {
     @Column
     private String especie;
     
+    @Override
     public Long getId() {
         return id;
     }
@@ -62,7 +63,7 @@ public class Variacao implements Serializable, IEntity {
 
     @Override
     public String toString() {
-        return "com.trabappcorp.Adopet.Variacao[ id=" + id + " ]";
+        return "modelo.Variacao[ id=" + id + " ]";
     }
     
 }
