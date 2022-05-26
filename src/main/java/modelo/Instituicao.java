@@ -6,49 +6,99 @@
 
 package modelo;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-public class Instituicao implements Serializable, IEntity {
+@Table(name = "instituicoes")
+public class Instituicao extends Usuario {
     
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     
     @Column(nullable=false)
-    private int num_animais;
+    private int numeroAnimais;
     
     @Column(nullable=false)
     private int capacidade;
     
     @Column(nullable=false)
-    private String num_registro;
+    private String numeroRegistro;
     
     @Column(nullable=false)
     private String certificacoes;
     
     @Column(nullable=false)
-    private String nome;
+    private String razaoSocial;
     
+    @Temporal(TemporalType.DATE)
     @Column(nullable=true)
-    private Date data_fundacao;
+    private Date dataFundacao;
 
-    public Instituicao(int num_animais, int capacidade, String num_registro, String certificacoes, String nome, Date data_fundacao) {
-        this.num_animais = num_animais;
-        this.capacidade = capacidade;
-        this.num_registro = num_registro;
-        this.certificacoes = certificacoes;
-        this.nome = nome;
-        this.data_fundacao = data_fundacao;
+    public Instituicao() {
+        super();
     }
-     
+    
+    public Instituicao(int num_animais, int capacidade, String num_registro, String certificacoes, String razaoSocial, Date data_fundacao) {
+        this.numeroAnimais = num_animais;
+        this.capacidade = capacidade;
+        this.numeroRegistro = num_registro;
+        this.certificacoes = certificacoes;
+        this.razaoSocial = razaoSocial;
+        this.dataFundacao = data_fundacao;
+    }
+
+    public int getNumeroAnimais() {
+        return numeroAnimais;
+    }
+
+    public void setNumeroAnimais(int numeroAnimais) {
+        this.numeroAnimais = numeroAnimais;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public String getNumeroRegistro() {
+        return numeroRegistro;
+    }
+
+    public void setNumeroRegistro(String numeroRegistro) {
+        this.numeroRegistro = numeroRegistro;
+    }
+
+    public String getCertificacoes() {
+        return certificacoes;
+    }
+
+    public void setCertificacoes(String certificacoes) {
+        this.certificacoes = certificacoes;
+    }
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    public Date getDataFundacao() {
+        return dataFundacao;
+    }
+
+    public void setDataFundacao(Date dataFundacao) {
+        this.dataFundacao = dataFundacao;
+    }
+
     public void atualizarInfo(){
         
     }
@@ -61,20 +111,14 @@ public class Instituicao implements Serializable, IEntity {
         
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -92,8 +136,9 @@ public class Instituicao implements Serializable, IEntity {
         return true;
     }
 
+    @Override
     public String toString() {
-        return "Instituicao{" + "id=" + id + '}';
+        return "modelo.Instituicao{" + "id=" + id + '}';
     }
 
 }

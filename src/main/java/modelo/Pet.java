@@ -6,13 +6,14 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -28,44 +29,122 @@ public class Pet implements Serializable, IEntity {
     private Long id;
     
     @Column(nullable=false)
-    public String nome;
+    private String nome;
     
     @Column(nullable=true)
-    public Date data_nasc;
+    private Date dataNascimento;
     
     @Column(nullable=false)
-    public Double peso;
+    private Double peso;
     
     @Column(nullable=false)
-    public Double altura;
+    private Double altura;
     
     @Column(nullable=false)
-    public Boolean adotado;
+    private Boolean adotado;
     
-    @Column(nullable=false)
+    @ManyToOne
+    @JoinColumn(name="id_dono", nullable=false)    
     private Usuario dono;
     
-    @JoinColumn(name="id_pet")
+    @ManyToOne
+    @JoinColumn(name="id_variacao", nullable = false)
     private Variacao variacao;
     
-    @Column(nullable=true)
-    private List<Adotante> desejadoPor;
+    @ManyToMany
+    private Set<Adotante> desejadoPor;
     
     @Column(nullable=false)
-    public Double gastoMensal;
+    private Double gastoMensal;
     
     @Column(nullable=true)
-    public String observacoes;
+    private String observacoes;
     
     @Column(nullable=false)
-    public String fotos;
-    
+    private String fotos;
+
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Double getPeso() {
+        return peso;
+    }
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+
+    public Double getAltura() {
+        return altura;
+    }
+    public void setAltura(Double altura) {
+        this.altura = altura;
+    }
+
+    public Boolean getAdotado() {
+        return adotado;
+    }
+    public void setAdotado(Boolean adotado) {
+        this.adotado = adotado;
+    }
+
+    public Usuario getDono() {
+        return dono;
+    }
+    public void setDono(Usuario dono) {
+        this.dono = dono;
+    }
+
+    public Variacao getVariacao() {
+        return variacao;
+    }
+    public void setVariacao(Variacao variacao) {
+        this.variacao = variacao;
+    }
+
+    public Set<Adotante> getDesejadoPor() {
+        return desejadoPor;
+    }
+    public void setDesejadoPor(Set<Adotante> desejadoPor) {
+        this.desejadoPor = desejadoPor;
+    }
+
+    public Double getGastoMensal() {
+        return gastoMensal;
+    }
+    public void setGastoMensal(Double gastoMensal) {
+        this.gastoMensal = gastoMensal;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public String getFotos() {
+        return fotos;
+    }
+    public void setFotos(String fotos) {
+        this.fotos = fotos;
     }
 
     @Override
@@ -90,7 +169,7 @@ public class Pet implements Serializable, IEntity {
 
     @Override
     public String toString() {
-        return "com.trabappcorp.Adopet.Pet[ id=" + id + " ]";
+        return "modelo.Pet[ id=" + id + " ]";
     }
     
 }

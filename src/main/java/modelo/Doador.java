@@ -6,33 +6,51 @@
 
 package modelo;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-public class Doador implements Serializable, IEntity {
-    
+@Table(name = "doadores")
+public class Doador extends Usuario {
+
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     
-    @Column(nullable=false)
-    private String cpf;
+    @Temporal(TemporalType.DATE)
+    @Column(nullable=false, unique = true)
+    private String CPF;
     
     @Column(nullable=true)
-    private Date data_nasc;
+    private Date dataNascimento;
     
-     public Doador(String cpf, Date data_nasc) {
-        this.cpf = cpf;
-        this.data_nasc = data_nasc;
+    public Doador() {
+        super();
+    }
+    
+    public Doador(String cpf, Date dataNascimento) {
+        super();
+
+        this.CPF = cpf;
+        this.dataNascimento = dataNascimento;
     }
 
+    public String getCPF() {
+        return CPF;
+    }
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+    
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+    
     public void atualizarInfo(){
         
     }
@@ -40,29 +58,19 @@ public class Doador implements Serializable, IEntity {
     public void anunciarPet(Pet pet){
         
     }
-    
+
     public void retiraAnuncio(Pet pet){
-        
-    }
-    
-    public void notificarAdotante(Pet pet, String titulo, String descricao){
-        
+
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
+    
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
