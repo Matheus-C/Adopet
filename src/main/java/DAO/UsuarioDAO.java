@@ -9,22 +9,37 @@ package DAO;
  *
  * @author Mac
  */
+import java.util.List;
+import javax.persistence.TypedQuery;
 import modelo.*;
 
 public class UsuarioDAO extends JpaDAO<Usuario> {
 
-       private static UsuarioDAO instance;
+    private static UsuarioDAO instance;
 
-       public static UsuarioDAO getInstance(){
-         if (instance == null){
+    public static UsuarioDAO getInstance() {
+        if (instance == null) {
             instance = new UsuarioDAO();
-         }
+        }
 
-         return instance;
-       }
+        return instance;
+    }
 
-       private UsuarioDAO() {
-         super(Usuario.class);
-       }
+    private UsuarioDAO() {
+        super(Usuario.class);
+    }
 
+    public Usuario findByLogin(String login) {
+        TypedQuery<Usuario> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE login=:login", Usuario.class);
+
+        List<Usuario> usuariosEncontrados = query.setParameter("login", login).getResultList();
+
+        if (usuariosEncontrados.size() > 0) {
+            return query.setParameter("login", login).getResultList().get(0);
+        }
+
+        return null;
+
+    }
 }

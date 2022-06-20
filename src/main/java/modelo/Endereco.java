@@ -21,7 +21,7 @@ public class Endereco implements Serializable, IEntity {
     private String bairro;    
     private String estado;
     private String rua;
-    private int numero;
+    private Integer numero;
     private String complemento;
     
     public Endereco() {}
@@ -31,7 +31,7 @@ public class Endereco implements Serializable, IEntity {
         String bairro,
         String estado,
         String rua,
-        int numero,
+        Integer numero,
         String complemento
     ) {
         this.cidade = cidade;
@@ -52,6 +52,7 @@ public class Endereco implements Serializable, IEntity {
          this.id = id;
     }
     
+    @Column(nullable = true)
     public String getCidade(){
         return cidade;
     }
@@ -59,13 +60,15 @@ public class Endereco implements Serializable, IEntity {
         this.cidade = cidade;
     }
 
+    @Column(nullable = true)
     public String getBairro(){
         return bairro;
     }
     public void setBairro(String bairro){
         this.bairro = bairro;
     }
-
+    
+    @Column(nullable = true)
     public String getRua(){
         return rua;
     }
@@ -73,20 +76,23 @@ public class Endereco implements Serializable, IEntity {
         this.rua = rua;
     }
 
-    public int getNumero(){
+    @Column(nullable = true)
+    public Integer getNumero(){
         return numero;
     }
-    public void setNumero(int numero){
+    public void setNumero(Integer numero){
         this.numero = numero;
     }
     
+    @Column(nullable = true)
     public String getEstado(){
         return estado;
     }
     public void setEstado(String estado){
         this.estado = estado;
     }
-
+    
+    @Column(nullable = true)
     public String getComplemento(){
         return complemento;
     }

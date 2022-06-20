@@ -27,13 +27,14 @@ public class Adotante extends Usuario {
     }
     
     public Adotante(
-        boolean adotando,
+        String login, String senha, Endereco endereco, String nome, String perfil,
         String CPF,
         Date dataNascimento
     ) {
-        super();
+
+        super(login, senha, endereco, nome, perfil);
         
-        this.adotando = adotando;
+        this.adotando = false;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
     }

@@ -17,7 +17,7 @@ import modelo.*;
 
 public abstract class JpaDAO <Entity extends IEntity>{
 
-       private final Class<Entity> entity;
+       protected final Class<Entity> entity;
        protected EntityManager entityManager;
        
        protected JpaDAO (Class<Entity> entity) {

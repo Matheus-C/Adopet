@@ -30,8 +30,8 @@ public class Doador extends Usuario {
         super();
     }
     
-    public Doador(String cpf, Date dataNascimento) {
-        super();
+    public Doador(String login, String senha, Endereco endereco, String nome, String perfil, String cpf, Date dataNascimento) {
+        super(login, senha, endereco, nome, perfil);
 
         this.CPF = cpf;
         this.dataNascimento = dataNascimento;

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modelo;
 
 import java.util.Date;
@@ -16,33 +15,35 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "instituicoes")
 public class Instituicao extends Usuario {
-    
+
     private static final long serialVersionUID = 1L;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private int numeroAnimais;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private int capacidade;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private String numeroRegistro;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private String certificacoes;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private String razaoSocial;
-    
+
     @Temporal(TemporalType.DATE)
-    @Column(nullable=true)
+    @Column(nullable = true)
     private Date dataFundacao;
 
     public Instituicao() {
         super();
     }
-    
-    public Instituicao(int num_animais, int capacidade, String num_registro, String certificacoes, String razaoSocial, Date data_fundacao) {
+
+    public Instituicao(String login, String senha, Endereco endereco, String nome, String perfil, int num_animais, int capacidade, String num_registro, String certificacoes, String razaoSocial, Date data_fundacao) {
+        super(login, senha, endereco, nome, perfil);
+
         this.numeroAnimais = num_animais;
         this.capacidade = capacidade;
         this.numeroRegistro = num_registro;
@@ -99,16 +100,16 @@ public class Instituicao extends Usuario {
         this.dataFundacao = dataFundacao;
     }
 
-    public void atualizarInfo(){
-        
+    public void atualizarInfo() {
+
     }
 
-    public void anunciarPet(Pet pet){
-        
+    public void anunciarPet(Pet pet) {
+
     }
-    
-    public void retiraAnuncio(Pet pet){
-        
+
+    public void retiraAnuncio(Pet pet) {
+
     }
 
     @Override

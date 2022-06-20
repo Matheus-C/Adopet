@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuarios")
-public abstract class Usuario implements Serializable, IEntity {
+public class Usuario implements Serializable, IEntity {
 
     protected Long id;
     
@@ -72,9 +72,8 @@ public abstract class Usuario implements Serializable, IEntity {
         this.senha = senha;
     }
 
-    @Column(nullable = false)
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_endereco")
+    @JoinColumn(name = "id_endereco", nullable = false)
     public Endereco getEndereco(){
         return endereco;
     }
