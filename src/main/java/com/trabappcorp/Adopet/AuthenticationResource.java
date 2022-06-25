@@ -225,7 +225,8 @@ public class AuthenticationResource {
 
     }
 
-    @POST
+    @GET
+    @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     public Response check() {
         JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
