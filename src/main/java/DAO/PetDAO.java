@@ -5,7 +5,9 @@
  */
 package DAO;
 
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import modelo.Pet;
 
 /**
@@ -26,6 +28,15 @@ public class PetDAO extends JpaDAO<Pet> {
 
        private PetDAO() {
          super(Pet.class);
+       }
+       
+       public List<Pet> getWantedPetsByUserId(Long userId){
+         TypedQuery<Pet> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE desejadoPor LIKE :id AND adotado=false", Pet.class);
+
+         List<Pet> wantedPets = query.setParameter("id", "%"+userId+"%").getResultList();
+
+         return wantedPets;
        }
 
 }

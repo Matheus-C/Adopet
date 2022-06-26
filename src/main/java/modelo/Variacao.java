@@ -32,6 +32,12 @@ public class Variacao implements Serializable, IEntity {
     @Column
     private String especie;
     
+    public Variacao(String raca, String porte, String especie) {
+        this.raca = raca;
+        this.porte = porte;
+        this.especie = especie;
+    }
+    
     @Override
     public Long getId() {
         return id;
@@ -39,6 +45,18 @@ public class Variacao implements Serializable, IEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getRaca() {
+        return raca;
+    }
+    
+    public String getPorte() {
+        return porte;
+    }
+    
+    public String getEspecie() {
+        return especie;
     }
 
     @Override

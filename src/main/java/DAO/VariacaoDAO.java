@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import java.util.List;
+import javax.persistence.TypedQuery;
 import modelo.Variacao;
 
 /**
@@ -25,6 +27,15 @@ public class VariacaoDAO extends JpaDAO<Variacao> {
 
        private VariacaoDAO() {
          super(Variacao.class);
+       }
+       
+       public List<Variacao> getAllVariacoes(){
+         TypedQuery<Variacao> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A", Variacao.class);
+
+         List<Variacao> variacoes = query.getResultList();
+
+         return variacoes;
        }
 
 }
