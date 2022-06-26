@@ -179,7 +179,7 @@ public class Pet {
             
             for(Variacao variacao : variacoes) {
                 if(raca.equals(variacao.getRaca()) && especie.equals(variacao.getEspecie())) {
-                    throw new HttpErrors.Unauthorized("Esta variação já foi cadastrada");
+                    throw new HttpErrors.BadRequest("Esta variação já foi cadastrada");
                 }
             }
             
