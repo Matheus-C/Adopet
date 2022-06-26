@@ -8,6 +8,7 @@ import filters.Authorize;
 import filters.UserParam;
 import java.util.List;
 import java.util.Set;
+import javax.json.Json;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,6 +21,7 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import modelo.Adotante;
 import modelo.Usuario;
 import modelo.Variacao;
 
@@ -47,36 +49,42 @@ public class Pet {
     
     @GET
     @Path("{idUsuario}")
-    @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPetsDesejados(@PathParam("idUsuario") String id) {
+    public Response getPetsDesejados(@PathParam("idUsuario") Long id) {
 
         JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
         JsonObjectBuilder responseJson = jsonFactory.createObjectBuilder();
 
         try {
-
-            Usuario usuario = (Usuario) this.servletRequest.getAttribute("paramUsuario");
-
+            
             JSONBuilder petJson = new JSONBuilder();
 
             JsonArrayBuilder wantedPetsListJson = jsonFactory.createArrayBuilder();
+            JsonArrayBuilder adotantesListJson = jsonFactory.createArrayBuilder();
             PetDAO petDAO = PetDAO.getInstance();
-            List<modelo.Pet> wantedPets = petDAO.getWantedPetsByUserId(usuario.getId());
+            List<modelo.Pet> wantedPets = petDAO.getWantedPetsByUserId(id);
 
             for (modelo.Pet pet : wantedPets) {
+                for (Adotante adotante : pet.getDesejadoPor()) {
+                    JsonObjectBuilder adotantesJson = jsonFactory.createObjectBuilder();
+                    adotantesJson
+                            .add("cpf", adotante.getCPF())
+                            .add("nome", adotante.getNome());
+
+                    adotantesListJson.add(adotantesJson);
+                }
                 JsonObjectBuilder wantedPetJson = jsonFactory.createObjectBuilder();
                 wantedPetJson
                         .add("id", pet.getId())
                         .add("name", pet.getNome())
-                        .add("dataNascimento", pet.getDataNascimento())
+                        .add("dataNascimento", pet.getDataNascimento().toString())
                         .add("peso", pet.getPeso())
                         .add("altura", pet.getAltura())
                         .add("adotado", pet.getAdotado())
-                        .add("dono", pet.getDono())
-                        .add("variacao", pet.getVariacao())
-                        .add("desejadoPor", pet.getDesejadoPor())
+                        .add("dono", pet.getDono().getId())
+                        .add("variacao", pet.getVariacao().getId())
+                        .add("desejadoPor", adotantesListJson)
                         .add("gastoMensal", pet.getGastoMensal())
                         .add("observacoes", pet.getObservacoes())
                         .add("fotos", pet.getFotos());
@@ -85,7 +93,7 @@ public class Pet {
             }
 
             petJson
-                    .add("userId", usuario.getId())
+                    .add("userId", id)
                     .add("pets", wantedPetsListJson);
 
             return Response.status(Response.Status.OK)
@@ -106,7 +114,6 @@ public class Pet {
     
     @GET
     @Path("getVariacoes")
-    @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVariacoes() {
@@ -123,14 +130,14 @@ public class Pet {
             List<Variacao> variacoes = variacaoDAO.getAllVariacoes();
 
             for (Variacao variacao : variacoes) {
-                JsonObjectBuilder variacoesJson = jsonFactory.createObjectBuilder();
-                variacoesJson
+                JsonObjectBuilder variacaoJson = jsonFactory.createObjectBuilder();
+                variacaoJson
                         .add("id", variacao.getId())
                         .add("raca", variacao.getRaca())
                         .add("porte", variacao.getPorte())
                         .add("especie", variacao.getEspecie());
 
-                variacoesListJson.add(variacoesJson);
+                variacoesListJson.add(variacaoJson);
             }
 
             variacoesJson
@@ -154,7 +161,6 @@ public class Pet {
     
     @POST
     @Path("registerVariacao")
-    @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
