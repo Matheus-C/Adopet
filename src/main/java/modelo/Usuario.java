@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuarios")
-public class Usuario implements Serializable, IEntity {
+public abstract class  Usuario implements Serializable, IEntity {
 
     protected Long id;
     
@@ -112,7 +112,11 @@ public class Usuario implements Serializable, IEntity {
         this.perfil = perfil;
     }
     
-    public void atualizarInfo(String nome, String perfil) {}
+    public void atualizarInfo(String nome, String senha, String perfil) {
+        if(nome != null) this.setNome(nome);
+        if(senha != null) this.setSenha(senha);
+        if(perfil != null) this.setPerfil(perfil);
+    }
     
     public void adicionarContato(String nome, String tipo, String info) {}
     

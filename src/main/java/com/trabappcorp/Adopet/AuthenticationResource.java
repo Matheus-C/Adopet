@@ -6,6 +6,7 @@ import DAO.InstituicaoDAO;
 import DAO.UsuarioDAO;
 import HttpErrors.BadRequest;
 import HttpErrors.HttpError;
+import Utils.JSONBuilder;
 import Utils.ValidationWrapper;
 import filters.Authorize;
 import io.jsonwebtoken.Jwts;
@@ -47,6 +48,7 @@ public class AuthenticationResource {
     HttpServletRequest servletRequest;
 
     @POST
+    @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response authenticate(@FormParam("login") String login, @FormParam("senha") String senha) {
@@ -65,8 +67,7 @@ public class AuthenticationResource {
                         .signWith(CHAVE, SignatureAlgorithm.HS256)
                         .compact();
 
-                JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
-                JsonObjectBuilder json = jsonFactory.createObjectBuilder();
+                JSONBuilder json = new JSONBuilder();
 
                 json.add("token", jwtToken);
 
@@ -104,16 +105,15 @@ public class AuthenticationResource {
             @FormParam("cpf") String cpf,
             @FormParam("dataNascimento") String dataNascimento_str, // date
             // instituicao
-            @FormParam("num_animais") String num_animais_str, // int
+            @FormParam("numAnimais") String num_animais_str, // int
             @FormParam("capacidade") String capacidade_str, // int
-            @FormParam("num_registro") String num_registro,
+            @FormParam("numRegistro") String num_registro,
             @FormParam("certificacoes") String certificacoes,
             @FormParam("razaoSocial") String razaoSocial,
-            @FormParam("data_fundacao") String data_fundacao_str // date
+            @FormParam("dataFundacao") String data_fundacao_str // date
     ) {
 
-        JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
-        JsonObjectBuilder responseJson = jsonFactory.createObjectBuilder();
+        JSONBuilder responseJson = new JSONBuilder();
 
         try {
 
@@ -121,14 +121,14 @@ public class AuthenticationResource {
             Usuario usuarioEncontrado = usuarioDAO.findByLogin(login);
 
             if (login == null || senha == null || nome == null || perfil == null
-                    || senha.length() == 0 || nome.length() == 0 || perfil.length() == 0) {
-                throw new HttpErrors.BadRequest("parâmetros faltantes ou inválidos");
+                   || login.length() == 0  || senha.length() == 0 || nome.length() == 0 || perfil.length() == 0) {
+                throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
             }
 
             if (usuarioEncontrado != null) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity(
-                                responseJson.add("message", "Usuário já existe").build())
+                                responseJson.add("mensagem", "Usuário já existe").build())
                         .build();
             }
 
@@ -174,20 +174,20 @@ public class AuthenticationResource {
                         || data_fundacao_str == null || data_fundacao_str.length() == 0
                         || razaoSocial == null || razaoSocial.length() == 0
                         || num_registro == null || num_registro.length() == 0) {
-                    throw new HttpErrors.BadRequest("parâmetros faltantes ou inválidos");
+                    throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
                 }
 
                 Integer num_animais = null;
-                num_animais = ValidationWrapper.parseInt("num_animais", num_animais_str);
+                num_animais = ValidationWrapper.parseInt("numAnimais", num_animais_str);
 
                 Integer capacidade = null;
                 capacidade = ValidationWrapper.parseInt("capacidade", capacidade_str);
 
                 Date data_fundacao = null;
-                data_fundacao = ValidationWrapper.parseDate("data_fundacao", data_fundacao_str);
+                data_fundacao = ValidationWrapper.parseDate("dataFundacao", data_fundacao_str);
 
                 novoUsuario = new Instituicao(
-                        login, senha, endereco, login, perfil,
+                        login, senha, endereco, nome, perfil,
                         num_animais,
                         capacidade,
                         num_registro,
@@ -204,7 +204,7 @@ public class AuthenticationResource {
             return Response.status(Response.Status.OK)
                     .entity(
                             responseJson
-                                    .add("message", "cadastro feito com sucesso")
+                                    .add("mensagem", "Cadastro feito com sucesso")
                                     .add("login", novoUsuario.getLogin())
                                     .build()
                     ).build();
@@ -212,33 +212,35 @@ public class AuthenticationResource {
             return Response.status(httpError.getStatus())
                     .entity(
                             responseJson
-                                    .add("message", httpError.getMessage())
+                                    .add("mensagem", httpError.getMessage())
                                     .build()
                     ).build();
         } catch (Exception ex) {
 
             return Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR
-            ).entity(responseJson.add("message", "Erro interno").build())
+            ).entity(responseJson.add("mensagem", "Erro interno").build())
                     .build();
         }
 
     }
 
     @GET
+    @Path("check")
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     public Response check() {
-        JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
-        JsonObjectBuilder json = jsonFactory.createObjectBuilder();
+        
+        JSONBuilder json = new JSONBuilder();
 
         Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
 
         return Response.status(Response.Status.OK)
                 .entity(
                         json
-                                .add("message", "success")
+                                .add("mensagem", "sucesso")
                                 .add("login", usuario.getLogin())
+                                .add("id", usuario.getId())
                                 .build()
                 ).build();
     }

@@ -11,28 +11,30 @@ package modelo;
  */
 import java.io.Serializable;
 import javax.persistence.*;
+
 @Entity
 @Table(name = "enderecos")
 public class Endereco implements Serializable, IEntity {
 
     private Long id;
-    
+
     private String cidade;
-    private String bairro;    
+    private String bairro;
     private String estado;
     private String rua;
     private Integer numero;
     private String complemento;
-    
-    public Endereco() {}
-    
+
+    public Endereco() {
+    }
+
     public Endereco(
-        String cidade,
-        String bairro,
-        String estado,
-        String rua,
-        Integer numero,
-        String complemento
+            String cidade,
+            String bairro,
+            String estado,
+            String rua,
+            Integer numero,
+            String complemento
     ) {
         this.cidade = cidade;
         this.bairro = bairro;
@@ -41,72 +43,84 @@ public class Endereco implements Serializable, IEntity {
         this.numero = numero;
         this.complemento = complemento;
     }
-    
+
     @Id
     @GeneratedValue
     @Override
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
-         this.id = id;
+        this.id = id;
     }
-    
+
     @Column(nullable = true)
-    public String getCidade(){
+    public String getCidade() {
         return cidade;
     }
-    public void setCidade(String cidade){
+
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
     @Column(nullable = true)
-    public String getBairro(){
+    public String getBairro() {
         return bairro;
     }
-    public void setBairro(String bairro){
+
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
-    
+
     @Column(nullable = true)
-    public String getRua(){
+    public String getRua() {
         return rua;
     }
-    public void setRua(String rua){
+
+    public void setRua(String rua) {
         this.rua = rua;
     }
 
     @Column(nullable = true)
-    public Integer getNumero(){
+    public Integer getNumero() {
         return numero;
     }
-    public void setNumero(Integer numero){
+
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
-    
+
     @Column(nullable = true)
-    public String getEstado(){
+    public String getEstado() {
         return estado;
     }
-    public void setEstado(String estado){
+
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
     @Column(nullable = true)
-    public String getComplemento(){
+    public String getComplemento() {
         return complemento;
     }
-    public void setComplemento(String complemento){
+
+    public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
 
     public void atualizarInfo(String cidade,
-        String bairro,
-        String estado,
-        String rua,
-        int numero,
-        String complemento
+            String bairro,
+            String estado,
+            String rua,
+            Integer numero,
+            String complemento
     ) {
+        if(bairro != null) this.setBairro(bairro);
+        if(estado != null) this.setEstado(estado);
+        if(rua != null) this.setRua(rua);
+        if(numero != null) this.setNumero(numero);
+        if(complemento != null) this.setComplemento(complemento);
     }
 
     @Override

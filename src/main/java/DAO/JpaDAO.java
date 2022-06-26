@@ -32,7 +32,7 @@ public abstract class JpaDAO <Entity extends IEntity>{
            return entityManager;
        }
 
-       public Entity getById(final int id) {
+       public Entity getById(final Long id) {
          return entityManager.find(this.entity, id);
        }
 
@@ -75,7 +75,7 @@ public abstract class JpaDAO <Entity extends IEntity>{
          }
        }
 
-       public void removeById(final int id) {
+       public void removeById(final Long id) {
          try {
             Entity entityObj = getById(id);
             remove(entityObj);

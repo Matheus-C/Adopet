@@ -14,7 +14,7 @@ import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "adotantes")
-public class Adotante extends Usuario {
+public class Adotante extends Usuario implements PessoaFisica {
 
     private Set<Pet> petsDesejados;
 

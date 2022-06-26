@@ -35,4 +35,14 @@ public class ValidationWrapper {
             throw new HttpErrors.BadRequest("O campo " + fieldName + " não é uma data válida");
         }
     }
+    
+    public static boolean isSet(String o) {
+        if(o == null) return false;
+        
+        if(o instanceof String) {
+            return ((String) o).length() > 0;
+        }
+        
+        return false;
+    }
 }

@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "doadores")
-public class Doador extends Usuario {
+public class Doador extends Usuario implements PessoaFisica {
 
     private static final long serialVersionUID = 1L;
     
