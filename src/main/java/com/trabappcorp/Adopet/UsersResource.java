@@ -8,7 +8,9 @@ import Utils.JSONBuilder;
 import Utils.ValidationWrapper;
 import filters.Authorize;
 import filters.UserParam;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -16,6 +18,7 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,7 +53,7 @@ public class UsersResource {
     public Response getUserInfo(@PathParam("idUsuario") String id) {
 
         JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
-        JsonObjectBuilder responseJson = jsonFactory.createObjectBuilder();
+        JSONBuilder responseJson = new JSONBuilder();
 
         try {
 
@@ -70,10 +73,10 @@ public class UsersResource {
             }
 
             JsonArrayBuilder contatosJson = jsonFactory.createArrayBuilder();
-            Set<Contato> contatosUsuario = usuario.getContatos();
+            List<Contato> contatosUsuario = usuario.getContatos();
 
             for (Contato contato : contatosUsuario) {
-                JsonObjectBuilder contatoJson = jsonFactory.createObjectBuilder();
+                JSONBuilder contatoJson = new JSONBuilder();
                 contatoJson
                         .add("nome", contato.getNome())
                         .add("info", contato.getInfo())
@@ -173,8 +176,7 @@ public class UsersResource {
             @FormParam("dataFundacao") String data_fundacao_str // date
     ) {
 
-        JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
-        JsonObjectBuilder responseJson = jsonFactory.createObjectBuilder();
+        JSONBuilder responseJson = new JSONBuilder();
 
         try {
 
@@ -279,6 +281,162 @@ public class UsersResource {
                                     .build()
                     ).build();
         } catch (Exception ex) {
+            System.out.println(ex);
+            return Response.status(
+                    Response.Status.INTERNAL_SERVER_ERROR
+            ).entity(responseJson.add("mensagem", "Erro interno").build())
+                    .build();
+        }
+
+    }
+
+    @POST
+    @Path("{idUsuario}/contatos")
+    @UserParam
+    @Authorize
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response getUserContacts(
+            @FormParam("info") String info,
+            @FormParam("nome") String nome,
+            @FormParam("tipo") String tipo
+    ) {
+
+        JSONBuilder responseJson = new JSONBuilder();
+
+        try {
+
+            Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
+            Usuario usuarioParametro = (Usuario) this.servletRequest.getAttribute("paramUsuario");
+
+            UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+
+            if (!usuario.getId().equals(usuarioParametro.getId())) {
+                throw new HttpErrors.Unauthorized("Você não pode alterar este usuário");
+            }
+
+            usuarioParametro.adicionarContato(nome, tipo, info);
+
+            usuarioDAO.persist(usuarioParametro);
+
+            return Response.status(Response.Status.OK)
+                    .entity(
+                            responseJson
+                                    .add("mensagem", "Usuário atualizado com sucesso")
+                                    .build()
+                    ).build();
+        } catch (HttpErrors.HttpError httpError) {
+            return Response.status(httpError.getStatus())
+                    .entity(
+                            responseJson
+                                    .add("mensagem", httpError.getMessage())
+                                    .build()
+                    ).build();
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return Response.status(
+                    Response.Status.INTERNAL_SERVER_ERROR
+            ).entity(responseJson.add("mensagem", "Erro interno").build())
+                    .build();
+        }
+
+    }
+
+    @DELETE
+    @Path("{idUsuario}/contatos/{nomeContato}")
+    @UserParam
+    @Authorize
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeUserContact(
+            @PathParam("nomeContato") String nomeContato
+    ) {
+
+        JSONBuilder responseJson = new JSONBuilder();
+
+        try {
+
+            Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
+            Usuario usuarioParametro = (Usuario) this.servletRequest.getAttribute("paramUsuario");
+
+            UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+
+            if (!usuario.getId().equals(usuarioParametro.getId())) {
+                throw new HttpErrors.Unauthorized("Você não pode alterar este usuário");
+            }
+
+            usuarioParametro.removerContato(nomeContato);
+
+            usuarioDAO.persist(usuarioParametro);
+
+            return Response.status(Response.Status.OK)
+                    .entity(
+                            responseJson
+                                    .add("mensagem", "Usuário atualizado com sucesso")
+                                    .build()
+                    ).build();
+        } catch (HttpErrors.HttpError httpError) {
+            return Response.status(httpError.getStatus())
+                    .entity(
+                            responseJson
+                                    .add("mensagem", httpError.getMessage())
+                                    .build()
+                    ).build();
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return Response.status(
+                    Response.Status.INTERNAL_SERVER_ERROR
+            ).entity(responseJson.add("mensagem", "Erro interno").build())
+                    .build();
+        }
+
+    }
+
+    @GET
+    @Path("{idUsuario}/contatos")
+    @UserParam
+    @Authorize
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserContacts(
+    ) {
+
+        JSONBuilder responseJson = new JSONBuilder();
+
+        try {
+
+            Usuario usuarioParametro = (Usuario) this.servletRequest.getAttribute("paramUsuario");
+
+            usuarioParametro.getContatos();
+            
+            JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
+        
+            JsonArrayBuilder contatosJson = jsonFactory.createArrayBuilder();
+            List<Contato> contatosUsuario = usuarioParametro.getContatos();
+
+            for (Contato contato : contatosUsuario) {
+                JSONBuilder contatoJson = new JSONBuilder();
+                contatoJson
+                        .add("nome", contato.getNome())
+                        .add("info", contato.getInfo())
+                        .add("tipo", contato.getTipo());
+
+                contatosJson.add(contatoJson);
+            }
+            
+            responseJson.add("contatos", contatosJson);
+
+            return Response.status(Response.Status.OK)
+                    .entity(
+                            responseJson
+                                    .build()
+                    ).build();
+        } /* catch (HttpErrors.HttpError httpError) {
+            return Response.status(httpError.getStatus())
+                    .entity(
+                            responseJson
+                                    .add("mensagem", httpError.getMessage())
+                                    .build()
+                    ).build();
+        }*/ catch (Exception ex) {
             System.out.println(ex);
             return Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR

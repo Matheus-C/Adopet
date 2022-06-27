@@ -121,7 +121,7 @@ public class AuthenticationResource {
             Usuario usuarioEncontrado = usuarioDAO.findByLogin(login);
 
             if (login == null || senha == null || nome == null || perfil == null
-                   || login.length() == 0  || senha.length() == 0 || nome.length() == 0 || perfil.length() == 0) {
+                    || login.length() == 0 || senha.length() == 0 || nome.length() == 0 || perfil.length() == 0) {
                 throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
             }
 
@@ -140,7 +140,7 @@ public class AuthenticationResource {
             }
 
             Endereco endereco = new Endereco(cidade, bairro, estado, rua, numero, complemento);
-            
+
             if (perfil.equals("doador") || perfil.equals("adotante")) {
 
                 if (cpf == null || cpf.length() == 0) {
@@ -216,7 +216,7 @@ public class AuthenticationResource {
                                     .build()
                     ).build();
         } catch (Exception ex) {
-
+            System.out.println(ex);
             return Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR
             ).entity(responseJson.add("mensagem", "Erro interno").build())
@@ -230,7 +230,7 @@ public class AuthenticationResource {
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     public Response check() {
-        
+
         JSONBuilder json = new JSONBuilder();
 
         Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
