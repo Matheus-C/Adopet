@@ -28,6 +28,17 @@ public class VariacaoDAO extends JpaDAO<Variacao> {
        private VariacaoDAO() {
          super(Variacao.class);
        }
+
+       
+      public List<Variacao> getAllVariacoes(){
+         TypedQuery<Variacao> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A", Variacao.class);
+
+         List<Variacao> variacoes = query.getResultList();
+
+         return variacoes;
+       }
+
       public long getVariacaoFilter(String especie, String raca, String porte){
         TypedQuery<Variacao> query = this.entityManager
                 .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE especie=:especie AND raca=:raca AND porte=:porte", Variacao.class);

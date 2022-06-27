@@ -28,10 +28,20 @@ public class PetDAO extends JpaDAO<Pet> {
         return instance;
       }
 
-      private PetDAO() {
-        super(Pet.class);
-      }
        
+       private PetDAO() {
+         super(Pet.class);
+       }
+       
+       public List<Pet> getWantedPetsByUserId(Long userId){
+         TypedQuery<Pet> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE desejadoPor LIKE :id AND adotado=false", Pet.class);
+
+         List<Pet> wantedPets = query.setParameter("id", "%"+userId+"%").getResultList();
+
+         return wantedPets;
+       }
+
       public Pet findById(int id) {
         TypedQuery<Pet> query = this.entityManager
                 .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE id=:id AND adotado=false", Pet.class);
