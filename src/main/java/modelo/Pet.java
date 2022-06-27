@@ -45,14 +45,14 @@ public class Pet implements Serializable, IEntity {
     
     @ManyToOne
     @JoinColumn(name="id_dono", nullable=false)    
-    private Usuario dono;
+    private int dono;
     
     @ManyToOne
     @JoinColumn(name="id_variacao", nullable = false)
     private Variacao variacao;
     
     @ManyToMany
-    private Set<Adotante> desejadoPor;
+    private Set<Integer> desejadoPor;
     
     @Column(nullable=false)
     private Double gastoMensal;
@@ -62,6 +62,30 @@ public class Pet implements Serializable, IEntity {
     
     @Column(nullable=false)
     private String fotos;
+
+    public Pet() {}
+
+    public Pet(String nome, 
+            Date dataNasc, 
+            double peso,
+            double altura,
+            int dono,
+            Variacao variacao,
+            double gasto, 
+            String obs,
+            String fotos) {
+        this.nome = nome;
+        this.dataNascimento = dataNasc;
+        this.peso = peso;
+        this.altura = altura;
+        this.dono = dono;
+        this.variacao = variacao;
+        this.gastoMensal = gasto;
+        this.observacoes = obs;
+        this.fotos = fotos;
+        this.adotado = false;
+        this.desejadoPor = null;
+    }
 
     public Long getId() {
         return id;
@@ -105,10 +129,10 @@ public class Pet implements Serializable, IEntity {
         this.adotado = adotado;
     }
 
-    public Usuario getDono() {
+    public int getDono() {
         return dono;
     }
-    public void setDono(Usuario dono) {
+    public void setDono(int dono) {
         this.dono = dono;
     }
 
@@ -119,10 +143,10 @@ public class Pet implements Serializable, IEntity {
         this.variacao = variacao;
     }
 
-    public Set<Adotante> getDesejadoPor() {
+    public Set<Integer> getDesejadoPor() {
         return desejadoPor;
     }
-    public void setDesejadoPor(Set<Adotante> desejadoPor) {
+    public void setDesejadoPor(Set<Integer> desejadoPor) {
         this.desejadoPor = desejadoPor;
     }
 

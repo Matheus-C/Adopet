@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import java.util.List;
+import javax.persistence.TypedQuery;
 import modelo.Variacao;
 
 /**
@@ -26,5 +28,16 @@ public class VariacaoDAO extends JpaDAO<Variacao> {
        private VariacaoDAO() {
          super(Variacao.class);
        }
+      public long getVariacaoFilter(String especie, String raca, String porte){
+        TypedQuery<Variacao> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE especie=:especie AND raca=:raca AND porte=:porte", Variacao.class);
 
+        long variacaoEncontrada = query.setParameter("especie", especie)
+                                              .setParameter("raca", raca)
+                                              .setParameter("porte", porte)
+                                              .getResultList().get(0).getId();
+
+          return variacaoEncontrada;
+      }
 }
+
