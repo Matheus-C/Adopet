@@ -35,7 +35,7 @@ import modelo.Usuario;
 import modelo.Variacao;
 
 @Path("/pets")
-public class Pets {
+public class PetsResource {
 
     private @Context
     HttpServletRequest servletRequest;
