@@ -50,7 +50,7 @@ public class UsersResource {
     @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserInfo(@PathParam("idUsuario") String id) {
+    public Response getUserInfo() {
 
         JsonBuilderFactory jsonFactory = Json.createBuilderFactory(null);
         JSONBuilder responseJson = new JSONBuilder();
@@ -147,11 +147,11 @@ public class UsersResource {
     }
 
     @POST
-    @Path("{idUsuario}")
+    @Path("/{idUsuario}")
     @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
     public Response updateUserInfo(
             @PathParam("idUsuario") String id,
             @FormParam("senha") String senha,
@@ -173,13 +173,13 @@ public class UsersResource {
             @FormParam("numRegistro") String num_registro,
             @FormParam("certificacoes") String certificacoes,
             @FormParam("razaoSocial") String razaoSocial,
-            @FormParam("dataFundacao") String data_fundacao_str // date
+            @FormParam("dataFundacao") String data_fundacao_str // date         
     ) {
 
         JSONBuilder responseJson = new JSONBuilder();
 
         try {
-
+            
             Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
             Usuario usuarioParametro = (Usuario) this.servletRequest.getAttribute("paramUsuario");
 
@@ -222,7 +222,6 @@ public class UsersResource {
 
                 if (perfil.equals("doador")) {
                     Doador doador = (Doador) usuario;
-
                 } else if (perfil.equals("adotante")) {
                     Adotante adotante = (Adotante) usuario;
 
@@ -291,7 +290,7 @@ public class UsersResource {
     }
 
     @POST
-    @Path("{idUsuario}/contatos")
+    @Path("/{idUsuario}/contatos")
     @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
@@ -343,7 +342,7 @@ public class UsersResource {
     }
 
     @DELETE
-    @Path("{idUsuario}/contatos/{nomeContato}")
+    @Path("/{idUsuario}/contatos/{nomeContato}")
     @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)
@@ -392,7 +391,7 @@ public class UsersResource {
     }
 
     @GET
-    @Path("{idUsuario}/contatos")
+    @Path("/{idUsuario}/contatos")
     @UserParam
     @Authorize
     @Produces(MediaType.APPLICATION_JSON)

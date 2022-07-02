@@ -54,8 +54,13 @@ public class AuthenticationResource {
     public Response authenticate(@FormParam("login") String login, @FormParam("senha") String senha) {
 
         UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
-
+        JSONBuilder responseJson = new JSONBuilder();
+        
         try {
+
+            if (!ValidationWrapper.isSet(login) || !ValidationWrapper.isSet(senha)) {
+                throw new HttpErrors.BadRequest("Falta parâmetros");
+            }
 
             Usuario usuarioEncontrado = usuarioDAO.findByLogin(login);
 
@@ -67,16 +72,23 @@ public class AuthenticationResource {
                         .signWith(CHAVE, SignatureAlgorithm.HS256)
                         .compact();
 
-                JSONBuilder json = new JSONBuilder();
-
-                json.add("token", jwtToken);
+                responseJson.add("token", jwtToken);
 
                 return Response.status(Response.Status.OK)
-                        .entity(json.build()).build();
+                        .entity(
+                                responseJson
+                                        .build()
+                        ).build();
             } else {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Usuário e/ou senha inválidos").build();
+                throw new HttpErrors.Unauthorized("Usuário e/ou senha inválidos");
             }
+        } catch (HttpErrors.HttpError httpError) {
+            return Response.status(httpError.getStatus())
+                    .entity(
+                            responseJson
+                                    .add("mensagem", httpError.getMessage())
+                                    .build()
+                    ).build();
         } catch (Exception ex) {
             return Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR
@@ -120,16 +132,15 @@ public class AuthenticationResource {
             UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
             Usuario usuarioEncontrado = usuarioDAO.findByLogin(login);
 
-            if (login == null || senha == null || nome == null || perfil == null
-                    || login.length() == 0 || senha.length() == 0 || nome.length() == 0 || perfil.length() == 0) {
+            if (
+                !ValidationWrapper.isSet(login) || !ValidationWrapper.isSet(senha) || 
+                !ValidationWrapper.isSet(nome) || !ValidationWrapper.isSet(perfil)
+            ) {
                 throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
             }
 
             if (usuarioEncontrado != null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(
-                                responseJson.add("mensagem", "Usuário já existe").build())
-                        .build();
+                throw new HttpErrors.BadRequest("Usuário já existe");
             }
 
             Usuario novoUsuario = null;
@@ -143,14 +154,11 @@ public class AuthenticationResource {
 
             if (perfil.equals("doador") || perfil.equals("adotante")) {
 
-                if (cpf == null || cpf.length() == 0) {
-                    throw new HttpErrors.BadRequest("parâmetros faltantes ou inválidos");
+                if (!ValidationWrapper.isSet(cpf)) {
+                    throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
                 }
 
-                Date dataNascimento = null;
-                if (dataNascimento_str != null) {
-                    dataNascimento = ValidationWrapper.parseDate("dataNascimento", dataNascimento_str);
-                }
+                Date dataNascimento = ValidationWrapper.parseDate("dataNascimento", dataNascimento_str);
 
                 if (perfil.equals("doador")) {
                     DoadorDAO doadorDAO = DoadorDAO.getInstance();
@@ -169,11 +177,11 @@ public class AuthenticationResource {
                 }
             } else if (perfil.equals("instituicao")) {
 
-                if (num_animais_str == null || num_animais_str.length() == 0
-                        || capacidade_str == null || capacidade_str.length() == 0
-                        || data_fundacao_str == null || data_fundacao_str.length() == 0
-                        || razaoSocial == null || razaoSocial.length() == 0
-                        || num_registro == null || num_registro.length() == 0) {
+                if (!ValidationWrapper.isSet(num_animais_str)
+                        || !ValidationWrapper.isSet(capacidade_str)
+                        || !ValidationWrapper.isSet(data_fundacao_str)
+                        || !ValidationWrapper.isSet(razaoSocial)
+                        || !ValidationWrapper.isSet(num_registro)) {
                     throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
                 }
 

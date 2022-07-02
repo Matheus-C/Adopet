@@ -36,7 +36,7 @@ public class UsuarioDAO extends JpaDAO<Usuario> {
         List<Usuario> usuariosEncontrados = query.setParameter("login", login).getResultList();
 
         if (usuariosEncontrados.size() > 0) {
-            return query.setParameter("login", login).getResultList().get(0);
+            return usuariosEncontrados.get(0);
         }
 
         return null;

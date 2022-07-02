@@ -10,8 +10,6 @@ package modelo;
  * @author Mac
  */
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "filtros_adotante")

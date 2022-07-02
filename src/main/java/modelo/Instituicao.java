@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "instituicoes")
@@ -36,7 +38,7 @@ public class Instituicao extends Usuario {
     @Temporal(TemporalType.DATE)
     @Column(nullable = true)
     private Date dataFundacao;
-
+    
     public Instituicao() {
         super();
     }

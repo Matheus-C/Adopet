@@ -10,13 +10,14 @@ package modelo;
  * @author Mac
  */
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "adotantes")
 public class Adotante extends Usuario implements PessoaFisica {
 
-    private Set<Pet> petsDesejados;
+    private Set<Pet> petsDesejados = new HashSet<>();
 
     private String CPF;
     private boolean adotando;
@@ -38,6 +39,20 @@ public class Adotante extends Usuario implements PessoaFisica {
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
     }
+    
+    
+    private FiltroAdotante filtro = new FiltroAdotante();
+    
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_filtro", nullable = false)
+    public FiltroAdotante getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(FiltroAdotante filtro) {
+        this.filtro = filtro;
+    }
+
     
     @Column(nullable = false)
     public boolean getAdotando(){

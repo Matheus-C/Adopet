@@ -1,5 +1,7 @@
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\EnderecoDAO.java
+C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\com\trabappcorp\Adopet\AdotantesResource.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\com\trabappcorp\Adopet\ApplicationConfig.java
+C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\com\trabappcorp\Adopet\InstituicoesResource.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\filters\AuthorizeFilter.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\modelo\FiltroAdotante.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\AdotanteDAO.java
@@ -9,6 +11,7 @@ C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\modelo\Contato.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\com\trabappcorp\Adopet\UsersResource.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\HttpErrors\BadRequest.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\modelo\Instituicao.java
+C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\Utils\JSONArrayBuilder.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\HttpErrors\HttpError.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\UsuarioDAO.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\filters\UserParamFilter.java
@@ -29,6 +32,7 @@ C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\DoadorDAO.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\PetDAO.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\modelo\PessoaFisica.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\Utils\JSONBuilder.java
+C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\com\trabappcorp\Adopet\Pets.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\InstituicaoDAO.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\DAO\VariacaoDAO.java
 C:\Users\Mac\Desktop\DAC - 2022.1\repo\src\main\java\HttpErrors\Unauthorized.java

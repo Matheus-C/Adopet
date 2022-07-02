@@ -15,6 +15,35 @@ import java.util.Date;
  */
 public class ValidationWrapper {
 
+    public static boolean parseBoolean(String fieldName, String value_str) throws BadRequest {
+        try {
+            boolean value = Boolean.parseBoolean(value_str);
+            return value;
+        } catch (NumberFormatException ex) {
+            throw new BadRequest("O campo " + fieldName + " não é um boolean válido");
+        }
+    }
+    
+    
+    public static long parseLongId(String fieldName, String value_str) throws BadRequest {
+        try {
+            long value = Long.parseLong(value_str);
+            return value;
+        } catch (NumberFormatException ex) {
+            throw new BadRequest("O campo " + fieldName + " não é um id válido");
+        }
+    }
+    
+    public static double parseDouble(String fieldName, String value_str) throws BadRequest {
+        try {
+            double value = Double.parseDouble(value_str);
+            return value;
+        } catch (NumberFormatException ex) {
+            throw new BadRequest("O campo " + fieldName + " não é um número válido");
+        }
+    }
+
+    
     public static int parseInt(String fieldName, String value_str) throws BadRequest {
         try {
             int value = Integer.parseInt(value_str);

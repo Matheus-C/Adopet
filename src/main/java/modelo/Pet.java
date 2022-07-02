@@ -6,7 +6,9 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import org.hibernate.annotations.OnDelete;
 
 /**
  *
@@ -44,15 +47,15 @@ public class Pet implements Serializable, IEntity {
     private Boolean adotado;
     
     @ManyToOne
-    @JoinColumn(name="id_dono", nullable=false)    
-    private int dono;
+    @JoinColumn(name="id_dono")
+    private Usuario dono;
     
     @ManyToOne
     @JoinColumn(name="id_variacao", nullable = false)
     private Variacao variacao;
     
     @ManyToMany
-    private Set<Integer> desejadoPor;
+    private Set<Adotante> desejadoPor;
     
     @Column(nullable=false)
     private Double gastoMensal;
@@ -69,9 +72,9 @@ public class Pet implements Serializable, IEntity {
             Date dataNasc, 
             double peso,
             double altura,
-            int dono,
+            Usuario dono,
             Variacao variacao,
-            double gasto, 
+            double gastoMensal, 
             String obs,
             String fotos) {
         this.nome = nome;
@@ -80,11 +83,11 @@ public class Pet implements Serializable, IEntity {
         this.altura = altura;
         this.dono = dono;
         this.variacao = variacao;
-        this.gastoMensal = gasto;
+        this.gastoMensal = gastoMensal;
         this.observacoes = obs;
         this.fotos = fotos;
         this.adotado = false;
-        this.desejadoPor = null;
+        this.desejadoPor = new HashSet();
     }
 
     public Long getId() {
@@ -129,10 +132,10 @@ public class Pet implements Serializable, IEntity {
         this.adotado = adotado;
     }
 
-    public int getDono() {
+    public Usuario getDono() {
         return dono;
     }
-    public void setDono(int dono) {
+    public void setDono(Usuario dono) {
         this.dono = dono;
     }
 
@@ -143,10 +146,10 @@ public class Pet implements Serializable, IEntity {
         this.variacao = variacao;
     }
 
-    public Set<Integer> getDesejadoPor() {
+    public Set<Adotante> getDesejadoPor() {
         return desejadoPor;
     }
-    public void setDesejadoPor(Set<Integer> desejadoPor) {
+    public void setDesejadoPor(Set<Adotante> desejadoPor) {
         this.desejadoPor = desejadoPor;
     }
 

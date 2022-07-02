@@ -18,9 +18,11 @@ import javax.ws.rs.core.Response;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObjectBuilder;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.core.Context;
 import modelo.Adotante;
 import modelo.Usuario;
 import modelo.Variacao;
@@ -28,7 +30,7 @@ import modelo.Variacao;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("/pets")
+//@Path("/pets")
 public class Pet {
 
     @GET
@@ -36,7 +38,7 @@ public class Pet {
     public String getIt() {
         return "Got it! ";
     }
-    
+
     /* 
         /pets
             /desejados
@@ -45,8 +47,7 @@ public class Pet {
                 GET     retorna as variacoes de pet cadastradas (DONE)
                 POST    registra uma nova variacao de pet (DONE)
 
-    */
-    
+     
     @GET
     @Path("{idUsuario}")
     @Authorize
@@ -57,7 +58,7 @@ public class Pet {
         JsonObjectBuilder responseJson = jsonFactory.createObjectBuilder();
 
         try {
-            
+
             JSONBuilder petJson = new JSONBuilder();
 
             JsonArrayBuilder wantedPetsListJson = jsonFactory.createArrayBuilder();
@@ -111,7 +112,7 @@ public class Pet {
                     .build();
         }
     }
-    
+
     @GET
     @Path("getVariacoes")
     @Authorize
@@ -158,7 +159,7 @@ public class Pet {
                     .build();
         }
     }
-    
+
     @POST
     @Path("registerVariacao")
     @Authorize
@@ -174,17 +175,17 @@ public class Pet {
 
         try {
             VariacaoDAO variacaoDAO = VariacaoDAO.getInstance();
-            
+
             List<Variacao> variacoes = variacaoDAO.getAllVariacoes();
-            
-            for(Variacao variacao : variacoes) {
-                if(raca.equals(variacao.getRaca()) && especie.equals(variacao.getEspecie())) {
+
+            for (Variacao variacao : variacoes) {
+                if (raca.equals(variacao.getRaca()) && especie.equals(variacao.getEspecie())) {
                     throw new HttpErrors.BadRequest("Esta variação já foi cadastrada");
                 }
             }
-            
+
             Variacao variacao = new Variacao(raca, porte, especie);
-            
+
             variacaoDAO.persist(variacao);
 
             return Response.status(Response.Status.OK)
@@ -208,5 +209,5 @@ public class Pet {
                     .build();
         }
 
-    }
+    }*/
 }

@@ -15,73 +15,84 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import modelo.*;
 
-public abstract class JpaDAO <Entity extends IEntity>{
+public abstract class JpaDAO<Entity extends IEntity> {
 
-       protected final Class<Entity> entity;
-       protected EntityManager entityManager;
-       
-       protected JpaDAO (Class<Entity> entity) {
-           this.entity = entity;
-           this.entityManager = getEntityManager();
-       }
+    protected final Class<Entity> entity;
+    protected EntityManager entityManager;
 
-       private EntityManager getEntityManager() {
-           
-           entityManager = EntityManagerSingleton.getInstance();
+    protected JpaDAO(Class<Entity> entity) {
+        this.entity = entity;
+        this.entityManager = getEntityManager();
+    }
 
-           return entityManager;
-       }
+    private EntityManager getEntityManager() {
 
-       public Entity getById(final Long id) {
-         return entityManager.find(this.entity, id);
-       }
+        entityManager = EntityManagerSingleton.getInstance();
 
-       @SuppressWarnings("unchecked")
-       public List<Entity> findAll() {
-         return entityManager.createQuery("SELECT A FROM " + this.entity.getName() + " A").getResultList();
-       }
+        return entityManager;
+    }
 
-       public void persist(Entity entityObj) {
-         try {
+    public Entity getById(final Long id) {
+        return entityManager.find(this.entity, id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Entity> findAll() {
+        return entityManager.createQuery("SELECT A FROM " + this.entity.getName() + " A").getResultList();
+    }
+
+    public void persist(Entity entityObj) {
+        try {
             entityManager.getTransaction().begin();
             entityManager.persist(entityObj);
             entityManager.getTransaction().commit();
-         } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-         }
-       }
+        }
+    }
 
-       public void merge(Entity entityObj) {
-         try {
+    public void refresh(Entity entityObj) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.refresh(entityObj);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+        }
+    }
+
+    public void merge(Entity entityObj) {
+        try {
             entityManager.getTransaction().begin();
             entityManager.merge(entityObj);
             entityManager.getTransaction().commit();
-         } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-         }
-       }
+        }
+    }
 
-       public void remove(IEntity entityObj) {
-         try {
+    public void remove(IEntity entityObj) {
+        try {
             entityManager.getTransaction().begin();
             entityObj = entityManager.find(this.entity, entityObj.getId());
             entityManager.remove(entityObj);
             entityManager.getTransaction().commit();
-         } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-         }
-       }
+        }
+    }
 
-       public void removeById(final Long id) {
-         try {
+    public void removeById(final Long id) {
+        try {
             Entity entityObj = getById(id);
             remove(entityObj);
-         } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
-         }
-       }
+        }
+    }
 
 }

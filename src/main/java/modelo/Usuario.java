@@ -32,10 +32,10 @@ public abstract class Usuario implements Serializable, IEntity {
     private Endereco endereco;
 
     private List<Contato> contatos = new ArrayList<>();
-    private Set<Pet> petsCadastrados;
+    private List<Pet> petsCadastrados = new ArrayList<>();
 
     private String nome;
-    private String perfil;
+    private String perfil;    
 
     public Usuario() {
     }
@@ -102,13 +102,13 @@ public abstract class Usuario implements Serializable, IEntity {
         this.contatos = contatos;
     }
 
-    @OneToMany(mappedBy = "dono")
-    public Set<Pet> getPetsCadastrados() {
+    @OneToMany(mappedBy = "dono", orphanRemoval = true)
+    public List<Pet> getPetsCadastrados() {
         return this.petsCadastrados;
     }
 
-    public void setPetsCadastrados(Set<Pet> pets) {
-        this.petsCadastrados = pets;
+    public void setPetsCadastrados(List<Pet> petsCadastrados) {
+        this.petsCadastrados = petsCadastrados;
     }
 
     @Column(nullable = false)
@@ -152,7 +152,7 @@ public abstract class Usuario implements Serializable, IEntity {
         this.contatos.add(novoContato);
     }
 
-    public void removerContato(String nome) throws HttpError{
+    public void removerContato(String nome) throws HttpError {
         for (Contato contato : this.contatos) {
             if (contato.getNome().equals(nome)) {
                 this.contatos.remove(contato);

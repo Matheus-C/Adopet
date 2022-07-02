@@ -9,23 +9,26 @@ package DAO;
  *
  * @author Mac
  */
-
+import com.trabappcorp.Adopet.Pets;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.TypedQuery;
 import modelo.*;
 
 public class AdotanteDAO extends JpaDAO<Doador> {
 
-       private static AdotanteDAO instance;
+    private static AdotanteDAO instance;
 
-       public static AdotanteDAO getInstance(){
-         if (instance == null){
+    public static AdotanteDAO getInstance() {
+        if (instance == null) {
             instance = new AdotanteDAO();
-         }
+        }
 
-         return instance;
-       }
+        return instance;
+    }
 
-       private AdotanteDAO() {
-         super(Doador.class);
-       }
+    private AdotanteDAO() {
+        super(Doador.class);
+    }
 
 }

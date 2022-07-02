@@ -31,6 +31,9 @@ public class Variacao implements Serializable, IEntity {
     
     @Column
     private String especie;
+
+    public Variacao() {
+    }
     
     public Variacao(String raca, String porte, String especie) {
         this.raca = raca;
@@ -50,7 +53,19 @@ public class Variacao implements Serializable, IEntity {
     public String getRaca() {
         return raca;
     }
-    
+
+    public void setRaca(String raca) {
+        this.raca = raca;
+    }
+
+    public void setPorte(String porte) {
+        this.porte = porte;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
     public String getPorte() {
         return porte;
     }

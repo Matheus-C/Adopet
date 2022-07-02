@@ -29,13 +29,14 @@ public class JSONBuilder implements JsonObjectBuilder {
     }
         
     @Override
-    public JsonObjectBuilder add(String string, JsonValue jv) {
+    public JSONBuilder add(String string, JsonValue jv) {
+        if(jv == null) this.addNull(string);
         this.objectBuilder.add(string, jv);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder add(String string, String string1) {
+    public JSONBuilder add(String string, String string1) {
         if(string1 == null) this.addNull(string);
         else this.objectBuilder.add(string, string1);
         
@@ -43,56 +44,81 @@ public class JSONBuilder implements JsonObjectBuilder {
     }
 
     @Override
-    public JsonObjectBuilder add(String string, BigInteger bi) {
-        this.objectBuilder.add(string, bi);
+    public JSONBuilder add(String string, BigInteger bi) {
+        if(bi == null) this.addNull(string);
+        else this.objectBuilder.add(string, bi);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder add(String string, BigDecimal bd) {
-        this.objectBuilder.add(string, bd);
+    public JSONBuilder add(String string, BigDecimal bd) {
+        if(bd == null) this.addNull(string);
+        else this.objectBuilder.add(string, bd);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder add(String string, int i) {
+    public JSONBuilder add(String string, int i) {
         this.objectBuilder.add(string, i);
         return this;
     }
-
+    public JSONBuilder add(String string, Integer i) {
+        if(i == null) this.addNull(string);
+        else this.objectBuilder.add(string, i);
+        return this;
+    }
+    
     @Override
-    public JsonObjectBuilder add(String string, long l) {
+    public JSONBuilder add(String string, long l) {
         this.objectBuilder.add(string, l);
         return this;
     }
 
+    public JSONBuilder add(String string, Long l) {
+        if(l == null) this.addNull(string);
+        else this.objectBuilder.add(string, l);
+        return this;
+    }
+    
     @Override
-    public JsonObjectBuilder add(String string, double d) {
+    public JSONBuilder add(String string, double d) {
         this.objectBuilder.add(string, d);
         return this;
     }
-
-    @Override
-    public JsonObjectBuilder add(String string, boolean bln) {
-        this.objectBuilder.add(string, bln);
+    public JSONBuilder add(String string, Double d) {
+        if(d == null) this.addNull(string);
+        else this.objectBuilder.add(string, d);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder addNull(String string) {
+    public JSONBuilder add(String string, boolean bln) {
+        this.objectBuilder.add(string, bln);
+        return this;
+    }
+    public JSONBuilder add(String string, Boolean bln) {
+        if(bln == null) this.addNull(string);
+        else this.objectBuilder.add(string, bln);
+        return this;
+    }
+
+    @Override
+    public JSONBuilder addNull(String string) {
         this.objectBuilder.addNull(string);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder add(String string, JsonObjectBuilder job) {
-        this.objectBuilder.add(string, job);
+    public JSONBuilder add(String string, JsonObjectBuilder job) {
+        if(job == null) this.addNull(string);
+        else this.objectBuilder.add(string, job);
         return this;
     }
 
     @Override
-    public JsonObjectBuilder add(String string, JsonArrayBuilder jab) {
-        this.objectBuilder.add(string, jab);
+    public JSONBuilder add(String string, JsonArrayBuilder jab) {
+        if(jab == null) this.addNull(string);
+        else this.objectBuilder.add(string, jab);
         return this;
     }
 

@@ -15,40 +15,55 @@ import modelo.Variacao;
  */
 public class VariacaoDAO extends JpaDAO<Variacao> {
 
-       private static VariacaoDAO instance;
+    private static VariacaoDAO instance;
 
-       public static VariacaoDAO getInstance(){
-         if (instance == null){
+    public static VariacaoDAO getInstance() {
+        if (instance == null) {
             instance = new VariacaoDAO();
-         }
+        }
 
-         return instance;
-       }
+        return instance;
+    }
 
-       private VariacaoDAO() {
-         super(Variacao.class);
-       }
+    private VariacaoDAO() {
+        super(Variacao.class);
+    }
 
-       
-      public List<Variacao> getAllVariacoes(){
-         TypedQuery<Variacao> query = this.entityManager
+    public Variacao findExistingVariacao(String porte, String especie, String raca) {
+        TypedQuery<Variacao> query = this.entityManager
+                .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE especie=:especie AND raca=:raca AND porte=:porte ", Variacao.class);
+
+        List<Variacao> variacoes = query
+                .setParameter("especie", especie)
+                .setParameter("raca", raca)
+                .setParameter("porte", porte)
+                .getResultList();
+        
+        if (variacoes.size() > 0) {
+            return variacoes.get(0);
+        }
+
+        return null;
+    }
+
+    public List<Variacao> getAllVariacoes() {
+        TypedQuery<Variacao> query = this.entityManager
                 .createQuery("SELECT A FROM " + this.entity.getName() + " A", Variacao.class);
 
-         List<Variacao> variacoes = query.getResultList();
+        List<Variacao> variacoes = query.getResultList();
 
-         return variacoes;
-       }
+        return variacoes;
+    }
 
-      public long getVariacaoFilter(String especie, String raca, String porte){
+    public long getVariacaoFilter(String especie, String raca, String porte) {
         TypedQuery<Variacao> query = this.entityManager
                 .createQuery("SELECT A FROM " + this.entity.getName() + " A WHERE especie=:especie AND raca=:raca AND porte=:porte", Variacao.class);
 
         long variacaoEncontrada = query.setParameter("especie", especie)
-                                              .setParameter("raca", raca)
-                                              .setParameter("porte", porte)
-                                              .getResultList().get(0).getId();
+                .setParameter("raca", raca)
+                .setParameter("porte", porte)
+                .getResultList().get(0).getId();
 
-          return variacaoEncontrada;
-      }
+        return variacaoEncontrada;
+    }
 }
-
