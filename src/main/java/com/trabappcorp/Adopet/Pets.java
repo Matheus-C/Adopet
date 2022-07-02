@@ -35,7 +35,7 @@ import modelo.Usuario;
 import modelo.Variacao;
 
 @Path("/pets")
-public class PetsResource {
+public class Pets {
 
     private @Context
     HttpServletRequest servletRequest;
@@ -184,7 +184,7 @@ public class PetsResource {
             Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
 
             if (!usuario.getPerfil().equals("instituicao") || !usuario.getPerfil().equals("doador")) {
-                //throw new HttpErrors.BadRequest("Usuário autenticado não é um doador ou instituição");
+                throw new HttpErrors.BadRequest("Usuário autenticado não é um doador ou instituição");
             }
 
             VariacaoDAO variacaoDAO = VariacaoDAO.getInstance();
@@ -219,7 +219,7 @@ public class PetsResource {
                                     .build()
                     ).build();
         } catch (Exception ex) {
-
+            System.out.println(ex);
             return Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR
             ).entity(responseJson.add("message", "Erro interno").build())

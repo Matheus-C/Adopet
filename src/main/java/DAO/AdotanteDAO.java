@@ -9,7 +9,7 @@ package DAO;
  *
  * @author Mac
  */
-import com.trabappcorp.Adopet.PetsResource;
+import com.trabappcorp.Adopet.Pets;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.TypedQuery;
