@@ -183,7 +183,7 @@ public class Pets {
 
             Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
 
-            if (!usuario.getPerfil().equals("instituicao") || !usuario.getPerfil().equals("doador")) {
+            if (!usuario.getPerfil().equals("instituicao") && !usuario.getPerfil().equals("doador")) {
                 throw new HttpErrors.BadRequest("Usuário autenticado não é um doador ou instituição");
             }
 

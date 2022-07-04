@@ -49,6 +49,7 @@ public abstract class JpaDAO<Entity extends IEntity> {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw ex;
         }
     }
 
@@ -60,6 +61,7 @@ public abstract class JpaDAO<Entity extends IEntity> {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw ex;
         }
     }
 
@@ -71,6 +73,7 @@ public abstract class JpaDAO<Entity extends IEntity> {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw ex;
         }
     }
 
@@ -83,6 +86,7 @@ public abstract class JpaDAO<Entity extends IEntity> {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw ex;
         }
     }
 
@@ -92,6 +96,7 @@ public abstract class JpaDAO<Entity extends IEntity> {
             remove(entityObj);
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw ex;
         }
     }
 
