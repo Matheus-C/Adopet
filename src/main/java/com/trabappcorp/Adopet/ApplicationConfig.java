@@ -14,5 +14,5 @@ import javax.ws.rs.core.Application;
 
 @javax.ws.rs.ApplicationPath("sample")
 public class ApplicationConfig extends Application {
-
+    
 }

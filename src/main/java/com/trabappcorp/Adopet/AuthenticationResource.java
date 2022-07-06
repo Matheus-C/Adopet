@@ -73,7 +73,7 @@ public class AuthenticationResource {
                         .compact();
 
                 responseJson.add("token", jwtToken);
-
+                
                 return Response.status(Response.Status.OK)
                         .entity(
                                 responseJson
