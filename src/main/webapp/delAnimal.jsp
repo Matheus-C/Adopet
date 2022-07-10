@@ -9,7 +9,7 @@
 <html>
     <head>
         <title>
-            Cadastre um pet
+            Deletar pet
         </title>
     <jsp:include page="cabecalho.html"/>
     </head>
