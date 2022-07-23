@@ -12,7 +12,7 @@
             
             <li class="menuItem"><a href="formAnimal.jsp" class="nav-link">Novo Pet</a></li>
             <li class="menuItem"><a href="meusAnimais.jsp" class="nav-link">Meus pets</a></li>
-            <li class="menuItem"><a href="" class="nav-link">Navegar</a></li>
+            <li class="menuItem"><a href="navegar.jsp?index=0" class="nav-link">Navegar</a></li>
         </ul>
         </div>
     </div>

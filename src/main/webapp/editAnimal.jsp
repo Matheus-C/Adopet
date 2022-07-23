@@ -68,10 +68,11 @@
                         %>
                     </select>
 
-                    <div class="form-group">
-                        <label for="fotos">Fotos:</label><br>
-                        <input type="file" class="form-control-file mb-3" id="fotos">
-                    </div>
+                    <label for="fotos" class="form-label">Fotos:</label>
+                    <input type="text" name="fotos" id="fotos" class="form-control" required>
+                    <small id="fotos-helptext" class="form-text text-muted">
+                        Adicione os links para as fotos. Se houver mais de uma, separe os links por vírgula.
+                    </small><br>
                     
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" value="" id="adotado">
@@ -80,7 +81,7 @@
                         </label>
                     </div>
 
-                    <input type="submit" name="sub" id="sub" class="btn btn-success">
+                    <input type="submit" name="sub" id="sub" class="btn btn-success mt-3">
                 </form>
             </div>
         </div>
