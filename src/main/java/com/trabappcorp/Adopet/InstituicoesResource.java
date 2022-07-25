@@ -36,7 +36,7 @@ public class InstituicoesResource extends UsersResource {
 
     private @Context
     HttpServletRequest servletRequest;
-
+    
     /* GET - "/encontrar/adotar" - retorna as instituicoes da cidade do usuario autenticado
     priorizando as mais cheias */
     @GET
@@ -58,7 +58,7 @@ public class InstituicoesResource extends UsersResource {
             Adotante adotante = (Adotante) usuario;
 
             InstituicaoDAO instituicoesDAO = InstituicaoDAO.getInstance();
-            List<Instituicao> instituicoes = instituicoesDAO.findFor(adotante);
+            List<Instituicao> instituicoes = instituicoesDAO.findAll();
 
             JSONArrayBuilder instituicoesJson = new JSONArrayBuilder();
 
@@ -148,7 +148,7 @@ public class InstituicoesResource extends UsersResource {
             Doador doador = (Doador) usuario;
 
             InstituicaoDAO instituicoesDAO = InstituicaoDAO.getInstance();
-            List<Instituicao> instituicoes = instituicoesDAO.findFor(doador);
+            List<Instituicao> instituicoes = instituicoesDAO.findAll();
 
             JSONArrayBuilder instituicoesJson = new JSONArrayBuilder();
 

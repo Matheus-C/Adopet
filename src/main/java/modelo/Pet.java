@@ -4,6 +4,7 @@
  */
 package modelo;
 
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,6 +24,7 @@ import org.hibernate.annotations.OnDelete;
  *
  * @author Matheus
  */
+
 @Entity
 public class Pet implements Serializable, IEntity {
 

@@ -115,12 +115,9 @@ public class AdotantesResource {
 
         try {
             
-            Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
-
-            if (!usuario.getPerfil().equals("adotante")) {
-                throw new HttpErrors.Unauthorized("Usuário autenticado não é um adotante");
-            }
-
+            Long id = 12L;
+            UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+            Usuario usuario = usuarioDAO.getById(id);
             Adotante adotante = (Adotante) usuario;
 
             FiltroAdotante filtro = adotante.getFiltro();
@@ -160,7 +157,7 @@ public class AdotantesResource {
                 }
             }
 
-            UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+            
             usuarioDAO.persist(usuario);
 
             return Response.status(Response.Status.OK)

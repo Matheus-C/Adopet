@@ -23,7 +23,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuarios")
-public abstract class Usuario implements Serializable, IEntity {
+public class Usuario implements Serializable, IEntity {
 
     protected Long id;
 

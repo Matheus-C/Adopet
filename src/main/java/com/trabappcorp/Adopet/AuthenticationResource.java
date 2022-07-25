@@ -135,7 +135,7 @@ public class AuthenticationResource {
             if (
                 !ValidationWrapper.isSet(login) || !ValidationWrapper.isSet(senha) || 
                 !ValidationWrapper.isSet(nome) || !ValidationWrapper.isSet(perfil)
-            ) {
+            ) { 
                 throw new HttpErrors.BadRequest("Parâmetros faltantes ou inválidos");
             }
 

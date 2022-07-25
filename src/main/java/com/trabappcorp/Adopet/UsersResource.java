@@ -44,7 +44,7 @@ public class UsersResource {
 
     private @Context
     HttpServletRequest servletRequest;
-
+    
     @GET
     @Path("{idUsuario}")
     @UserParam
@@ -179,12 +179,12 @@ public class UsersResource {
         JSONBuilder responseJson = new JSONBuilder();
 
         try {
-            
+
             Usuario usuario = (Usuario) this.servletRequest.getAttribute("usuario");
             Usuario usuarioParametro = (Usuario) this.servletRequest.getAttribute("paramUsuario");
-
+            
             UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
-
+            
             if (!usuario.getId().equals(usuarioParametro.getId())) {
                 throw new HttpErrors.Unauthorized("Você não pode alterar este usuário");
             }
@@ -204,7 +204,7 @@ public class UsersResource {
             usuario
                     .getEndereco()
                     .atualizarInfo(cidade, bairro, estado, rua, numero, complemento);
-
+            
             String perfil = usuario.getPerfil();
 
             if (perfil.equals("adotante") || perfil.equals("doador")) {
@@ -231,7 +231,7 @@ public class UsersResource {
                 }
             } else if (perfil.equals("instituicao")) {
                 Instituicao instituicao = (Instituicao) usuario;
-
+                
                 if (num_animais_str != null) {
                     Integer num_animais = null;
                     num_animais = ValidationWrapper.parseInt("numAnimais", num_animais_str);

@@ -6,6 +6,7 @@
 package Utils;
 
 import HttpErrors.BadRequest;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -57,7 +58,8 @@ public class ValidationWrapper {
         try {
             Date value = null;
             if (value_str.length() > 0) {
-                value = Date.from(Instant.parse(value_str));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                value = sdf.parse(value_str);
             }
             return value;
         } catch (Exception e) {
